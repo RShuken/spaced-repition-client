@@ -6,7 +6,7 @@ import './Header.css'
 
 class Header extends Component {
   static contextType = UserContext
-
+  
   handleLogoutClick = () => {
     this.context.processLogout()
   }
@@ -15,7 +15,8 @@ class Header extends Component {
     return (
       <div>
         <span>
-          {this.context.user.name}
+          <p>this is the user name: </p>{this.context.user.name}
+          <p>this is the user id: </p>{this.context.user.id}
         </span>
         <nav>
           <Link
