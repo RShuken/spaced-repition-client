@@ -1,0 +1,19 @@
+.translateWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.translateWordContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.translateWordContainer input {
+    padding: 5px;
+    margin: 5px;
+}

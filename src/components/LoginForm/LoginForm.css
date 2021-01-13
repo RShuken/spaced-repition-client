@@ -15,10 +15,14 @@ header: flex
   display: flex;
   width: 100%;
   height: 200px;
-  background-color: red;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: fit-content;
+  margin: auto;
+  padding: 5px;
 }
 
 .inputs {
@@ -31,14 +35,15 @@ header: flex
 }
 
 .inputs input {
-  border: none;
-  outline: none;
+  border-radius: 20px;
 }
 
 .LoginForm button {
   width: 100px;
   height: auto;
-  border: none;
+  border: 1px solid black;
+  border-radius: 20px;
+  margin-top: 15px;
 }
 
 #login-username-input {
