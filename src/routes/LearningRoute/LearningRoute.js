@@ -12,15 +12,16 @@ class LearningRoute extends Component {
       wordCorrectCount: 0,
       wordIncorrectCount: 0,
       answer: '',
+      guessData: { correct: null },
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchHead();
     this.fetchLanguage();
-  }
+  };
 
-  fetchLanguage() {
+  fetchLanguage = () => {
     const { API_ENDPOINT } = config;
     const fetchHeaders = {
       method: 'GET',
@@ -35,9 +36,9 @@ class LearningRoute extends Component {
         console.log('this is the server response from /language', data);
       })
       .catch((err) => console.log(err.message));
-  }
+  };
 
-  fetchHead() {
+  fetchHead = () => {
     const { API_ENDPOINT } = config;
     const fetchHeaders = {
       method: 'GET',
@@ -58,13 +59,13 @@ class LearningRoute extends Component {
         });
       })
       .catch((err) => console.log(err.message));
-  }
+  };
 
   updateAnswer = (e) => {
     this.setState({ answer: e.target.value });
-  };  
+  };
 
-  checkGuess= () => {
+  checkGuess = () => {
     let userGuess = this.state.answer;
     const { API_ENDPOINT } = config;
     console.log('check guess is running and this is the user guess', userGuess);
@@ -79,9 +80,69 @@ class LearningRoute extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log('this is the guess return data', data);
-        //this.context.setNextWord(data);
+        this.setState({ guessData: data });
       });
-  }
+  };
+
+  renderGuess = () => {
+    if (this.state.guessData.isCorrect === true) {
+      return (
+        <div className='translateWordContainer'>
+          <h1>{this.state.nextWord}</h1>
+          <h2>You translated the word correctly!</h2>
+          <h2>
+            {' '}
+            The correct translation for the word: {this.state.nextWord} is{' '}
+            {this.state.guessData.answer}
+          </h2>
+          <button>
+            <a href='/learn'>Try another word!</a>
+          </button>
+          <p>Your total score is: {this.state.guessData.totalScore}</p>
+          <h3>
+            {' '}
+            You have answered this word correctly{' '}
+            {this.state.guessData.wordCorrectCount} times
+          </h3>
+          <h3>
+            {' '}
+            You have answered this word incorrectly{' '}
+            {this.state.guessData.wordIncorrectCount} times
+          </h3>
+        </div>
+      );
+    }
+    if (this.state.guessData.isCorrect === false) {
+      return (
+        <div className='translateWordContainer'>
+          <h1>{this.state.nextWord}</h1>
+          <h2>You translated the word incorrectly...</h2>
+          <h2>
+            {' '}
+            The correct translation for the word: {this.state.nextWord} is{' '}
+            {this.state.guessData.answer}
+          </h2>
+          <button>
+            <a href='/learn'>Try another word!</a>
+          </button>
+          <p>Your total score is: {this.state.guessData.totalScore}</p>
+          <h3>
+            {' '}
+            You have answered this word correctly {
+              this.state.wordCorrectCount
+            }{' '}
+            times
+          </h3>
+          <h3>
+            {' '}
+            You have answered this word incorrectly{' '}
+            {this.state.wordIncorrectCount} times
+          </h3>
+        </div>
+      );
+    }
+    return 'data is having issues';
+  };
 
   renderTranslate() {
     return (
@@ -89,17 +150,19 @@ class LearningRoute extends Component {
         <h1>Translate the word:</h1>
         <h1>{this.state.nextWord}</h1>
         <p>Your total score is: {this.state.totalScore}</p>
-        
+        <label htmlFor='answer'>
           <h2>What is the correct translation in English?</h2>
-          <input
-            type='text'
-            id='answer'
-            name='answer'
-            onChange={this.updateAnswer}
-            placeholder='Guess Here'
-          ></input>
-          <button onClick={this.checkGuess}>Submit</button>
-        
+        </label>
+        <input
+          type='text'
+          id='answer'
+          name='answer'
+          onChange={this.updateAnswer}
+          placeholder='Guess Here'
+        ></input>
+        <button id='guessBtn' onClick={this.checkGuess}>
+          Submit
+        </button>
         <h3>
           {' '}
           You have answered this word correctly {
@@ -116,12 +179,17 @@ class LearningRoute extends Component {
     );
   }
 
+  chooseRender = () => {
+    if (this.state.guessData.correct === null) {
+      return this.renderTranslate();
+    }
+    return this.renderGuess();
+  };
+
   render() {
     return (
       <div className='translateWrapper'>
-        <section>
-          {this.renderTranslate()}
-        </section>
+        <section>{this.chooseRender()}</section>
       </div>
     );
   }

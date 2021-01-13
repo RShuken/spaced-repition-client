@@ -3,8 +3,6 @@ import config from '../../config';
 import TokenService from '../../services/token-service';
 import './DashboardRoute.css';
 
-
-
 class DashboardRoute extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +11,7 @@ class DashboardRoute extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchHead();
     this.fetchLanguage();
   }
@@ -34,8 +32,6 @@ class DashboardRoute extends Component {
         this.setState({ words: data.words, language: data.language })
       })
       .catch((err) => console.log(err.message));
-
-
   }
 
   fetchHead = () => {
