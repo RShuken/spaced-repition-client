@@ -1,8 +1,8 @@
 export default {
   API_ENDPOINT:
-    'http://localhost:8000/api',
+    'https://ryans-spaced-repetition-server.herokuapp.com',
   TOKEN_KEY: 'blogful-client-auth-token',
 };
 
 
-//'https://cors-anywhere.herokuapp.com/https://ryans-spaced-repetition-server.herokuapp.com' ||
+//'https://cors-anywhere.herokuapp.com/https://ryans-spaced-repetition-server.herokuapp.com' ||g
