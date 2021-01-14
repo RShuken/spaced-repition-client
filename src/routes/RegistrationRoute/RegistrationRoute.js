@@ -10,8 +10,7 @@ class RegistrationRoute extends Component {
   };
 
   handleRegistrationSuccess = () => {
-    const { history } = this.props;
-    history.push('/login');
+    this.props.history.push('/');
   };
 
   render() {
