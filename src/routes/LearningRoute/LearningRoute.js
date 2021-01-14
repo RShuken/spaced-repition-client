@@ -32,8 +32,7 @@ class LearningRoute extends Component {
 
     fetch(`${API_ENDPOINT}/language`, fetchHeaders)
       .then((res) => res.json())
-      .then((data) => {
-      })
+      .then((data) => {})
       .catch((err) => console.log(err.message));
   };
 
@@ -63,8 +62,8 @@ class LearningRoute extends Component {
     this.setState({ answer: e.target.value });
   };
 
-  checkGuess = () => {
-    let userGuess = this.state.answer;
+  checkGuess = (e) => {
+    e.preventDefault();
     const { API_ENDPOINT } = config;
     fetch(`${API_ENDPOINT}/language/guess`, {
       method: 'POST',
@@ -137,40 +136,43 @@ class LearningRoute extends Component {
         </div>
       );
     }
-    return 'data is having issues';
+    return '';
   };
 
   renderTranslate() {
     return (
       <div className='translateWordContainer'>
-        <h1>Translate the word:</h1>
-        <h1>{this.state.nextWord}</h1>
-        <p>Your total score is: {this.state.totalScore}</p>
-        <label htmlFor='answer'>
-          <h2>What is the correct translation in English?</h2>
-        </label>
-        <input
-          type='text'
-          id='answer'
-          name='answer'
-          onChange={this.updateAnswer}
-          placeholder='Guess Here'
-        ></input>
-        <button id='guessBtn' onClick={this.checkGuess}>
-          Submit
-        </button>
-        <h3>
-          {' '}
-          You have answered this word correctly {
-            this.state.wordCorrectCount
-          }{' '}
-          times
-        </h3>
-        <h3>
-          {' '}
-          You have answered this word incorrectly{' '}
-          {this.state.wordIncorrectCount} times
-        </h3>
+        <form className='translateWordContainer' onSubmit={(e) => this.checkGuess(e)}>
+          <h1>Translate the word:</h1>
+          <h1>{this.state.nextWord}</h1>
+          <p>Your total score is: {this.state.totalScore}</p>
+          <label htmlFor='answer'>
+            <h2>What is the correct translation in English?</h2>
+          </label>
+          <input
+            type='text'
+            id='answer'
+            name='answer'
+            required
+            onChange={this.updateAnswer}
+            placeholder='Guess Here'
+          />
+          <button id='guessBtn' type='submit'>
+            Submit
+          </button>
+          <h3>
+            {' '}
+            You have answered this word correctly {
+              this.state.wordCorrectCount
+            }{' '}
+            times
+          </h3>
+          <h3>
+            {' '}
+            You have answered this word incorrectly{' '}
+            {this.state.wordIncorrectCount} times
+          </h3>
+        </form>
       </div>
     );
   }
