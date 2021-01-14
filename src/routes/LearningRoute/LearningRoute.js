@@ -33,7 +33,6 @@ class LearningRoute extends Component {
     fetch(`${API_ENDPOINT}/language`, fetchHeaders)
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is the server response from /language', data);
       })
       .catch((err) => console.log(err.message));
   };
@@ -50,7 +49,6 @@ class LearningRoute extends Component {
     fetch(`${API_ENDPOINT}/language/head`, fetchHeaders)
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is the server response from /head', data);
         this.setState({
           nextWord: data.nextWord,
           totalScore: data.totalScore,
@@ -68,7 +66,6 @@ class LearningRoute extends Component {
   checkGuess = () => {
     let userGuess = this.state.answer;
     const { API_ENDPOINT } = config;
-    console.log('check guess is running and this is the user guess', userGuess);
     fetch(`${API_ENDPOINT}/language/guess`, {
       method: 'POST',
       headers: {
@@ -79,7 +76,6 @@ class LearningRoute extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is the guess return data', data);
         this.setState({ guessData: data });
       });
   };

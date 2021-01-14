@@ -12,7 +12,6 @@ class DashboardRoute extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchHead();
     this.fetchLanguage();
   }
 
@@ -28,28 +27,8 @@ class DashboardRoute extends Component {
     fetch(`${API_ENDPOINT}/language`, fetchHeaders)
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is the server response from /language', data);
         this.setState({ words: data.words, language: data.language })
       })
-      .catch((err) => console.log(err.message));
-  }
-
-  fetchHead = () => {
-    const { API_ENDPOINT } = config;
-    const fetchHeaders = {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${TokenService.getAuthToken()}`,
-      },
-    };
-
-    fetch(`${API_ENDPOINT}/language/head`, fetchHeaders)
-      .then((res) => res.json())
-      .then((data) =>
-      {
-        console.log('this is the server response from /head', data)
-      }
-      )
       .catch((err) => console.log(err.message));
   }
 
